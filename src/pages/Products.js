@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useContext } from "react";
+import { CartContext } from "../CartContext";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -42,18 +44,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const items = [
+  {
+    id: "0",
+    title: "item0",
+    price: 10,
+    quantity: 1,
+    description: "abcd",
+  },
+  {
+    id: "1",
+    title: "item1",
+    price: 20,
+    quantity: 1,
+    description: "abcde",
+  },
+  {
+    id: "2",
+    title: "item2",
+    price: 30,
+    quantity: 1,
+    description: "abcdef",
+  },
+];
 
 const Products = (props) => {
   const classes = useStyles();
+  const { cart, setCart } = useContext(CartContext);
+  const addToCart = async (e) => {
+    const itemToAdd = items.filter(
+      (item) => item.id === e.currentTarget.dataset.id
+    );
+    let isFound = false;
+    const newCart = cart.map((cartItem) => {
+      if (cartItem.id === e.currentTarget.dataset.id) {
+        cartItem.quantity = parseInt(cartItem.quantity) + 1;
+        isFound = true;
+      }
+      return cartItem;
+    });
+    if (!isFound) {
+      await setCart([...cart, itemToAdd[0]]);
+    } else {
+      await setCart(newCart);
+    }
+    return;
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {items.map((item) => (
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -62,16 +107,22 @@ const Products = (props) => {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {item.title}
                     </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
+                    <Typography>{item.description}</Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                    >{`Price: $${item.price}`}</Typography>
                   </CardContent>
-                  <CardActions className="parent-even-dist-children">
-                    <Button size="small" color="primary">
-                      View
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={addToCart}
+                      data-id={item.id}
+                    >
+                      Add to cart
                     </Button>
                   </CardActions>
                 </Card>

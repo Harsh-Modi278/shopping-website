@@ -7,6 +7,8 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -46,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     gap: "10rem",
     marginTop: "10rem",
     marginBottom: "15rem",
-    animation: "fadeIn ease 2s",
   },
   socialLinks: {
     cursor: "pointer",
@@ -59,39 +60,49 @@ const Contact = (props) => {
     <React.Fragment>
       <CssBaseline />
       <main>
-        <Container className={classes.contactContainer} maxWidth="md">
-          <Link
-            color="inherit"
-            href="https://github.com/Harsh-Modi278"
-            target="_blank"
-            className={classes.socialLinks}
-          >
-            <GitHubIcon style={{ fontSize: 50 }} />
-          </Link>
-          <Link
-            color="inherit"
-            href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
-            target="_blank"
-            className={classes.socialLinks}
-          >
-            <FacebookIcon style={{ fontSize: 50 }} />
-          </Link>
-          <Link
-            color="inherit"
-            href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
-            target="_blank"
-            className={classes.socialLinks}
-          >
-            <TwitterIcon style={{ fontSize: 50 }} />
-          </Link>
-          <Link
-            color="inherit"
-            href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
-            target="_blank"
-            className={classes.socialLinks}
-          >
-            <InstagramIcon style={{ fontSize: 50 }} />
-          </Link>
+        <Container maxWidth="md" className={classes.contactContainer}>
+          <List style={{ display: "flex", flexDirection: "row" }}>
+            <ListItem style={{ margin: "2rem" }}>
+              <Link
+                color="inherit"
+                href="https://github.com/Harsh-Modi278"
+                target="_blank"
+                className={classes.socialLinks}
+              >
+                <GitHubIcon style={{ fontSize: 50 }} />
+              </Link>
+            </ListItem>
+            <ListItem style={{ margin: "2rem" }}>
+              <Link
+                color="inherit"
+                href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
+                target="_blank"
+                className={classes.socialLinks}
+              >
+                <FacebookIcon style={{ fontSize: 50 }} />
+              </Link>
+            </ListItem>
+            <ListItem style={{ margin: "2rem" }}>
+              <Link
+                color="inherit"
+                href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
+                target="_blank"
+                className={classes.socialLinks}
+              >
+                <TwitterIcon style={{ fontSize: 50 }} />
+              </Link>
+            </ListItem>
+            <ListItem style={{ margin: "2rem" }}>
+              <Link
+                color="inherit"
+                href="https://www.youtube.com/watch?v=o-YBDTqX_ZU"
+                target="_blank"
+                className={classes.socialLinks}
+              >
+                <InstagramIcon style={{ fontSize: 50 }} />
+              </Link>
+            </ListItem>
+          </List>
         </Container>
       </main>
     </React.Fragment>

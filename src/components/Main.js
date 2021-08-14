@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Products from "../pages/Products";
 import Contact from "../pages/Contact";
 import routes from "../constants/routes.json";
+import Cart from "./Cart";
 
 const Main = (props) => {
   return (
@@ -10,7 +11,7 @@ const Main = (props) => {
       <Router>
         <Switch>
           <Route path={routes.PRODUCTS} component={Products} />
-          <Route exact path={routes.CONTACT} component={Contact} />
+          <Route path={routes.CONTACT} component={Contact} />
           <Route path={routes.HOME} component={Home} />
         </Switch>
       </Router>

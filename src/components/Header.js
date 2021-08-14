@@ -8,7 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Badge } from "@material-ui/core";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import Drawer from "@material-ui/core/Drawer";
+import { useState } from "react";
+import Cart from "./Cart";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -25,11 +28,27 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     flexShrink: 0,
   },
+  paper: {
+    width: 350,
+  },
 }));
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
+  const { sections, title, cartItems } = props;
+
+  const [drawerState, setDrawerState] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState(open);
+  };
 
   return (
     <React.Fragment>
@@ -71,11 +90,21 @@ export default function Header(props) {
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <Button variant="outlined" size="small">
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartIcon />
-            </Badge>
+          <Button onClick={toggleDrawer(true)}>
+            <Button variant="outlined" size="small">
+              <Badge badgeContent={cartItems} color="primary">
+                <ShoppingCartIcon />
+              </Badge>
+            </Button>{" "}
           </Button>
+          <Drawer
+            anchor="right"
+            open={drawerState}
+            onClose={toggleDrawer(false)}
+            classes={{ paper: classes.paper }}
+          >
+            <Cart />
+          </Drawer>
         </Toolbar>
       </Router>
     </React.Fragment>
