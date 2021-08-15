@@ -22,7 +22,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
-    // marginTop: theme.spacing(8),
+    marginTop: "auto",
     padding: theme.spacing(6, 0),
   },
 }));
@@ -33,7 +33,7 @@ export default function Footer(props) {
 
   return (
     <footer className={classes.footer}>
-      <Container maxWidth="lg">
+      <Container maxWidth="sm">
         <Typography variant="h6" align="center" gutterBottom>
           {title}
         </Typography>
