@@ -12,6 +12,7 @@ function Copyright() {
       <Link
         color="inherit"
         href="https://github.com/Harsh-Modi278/shopping-website"
+        target="_blank"
       >
         <GitHubIcon />
       </Link>{" "}
