@@ -54,7 +54,7 @@ export default function Header(props) {
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
         <RouterLink
-          to="/"
+          to="/shopping-website"
           style={{
             color: "black",
             textDecorationLine: "none",

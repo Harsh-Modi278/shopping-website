@@ -2,7 +2,7 @@
 
 A fake shopping website made as part of Odin Project ReactJS course [Excercise](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/shopping-cart).
 
-[Demo Link](#)
+[Demo Link](https://Harsh-Modi278.github.io/shopping-website)
 
 ## Getting Started
 
