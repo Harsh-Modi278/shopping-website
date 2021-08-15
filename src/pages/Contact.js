@@ -58,7 +58,7 @@ const Contact = (props) => {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <main>
         <Container maxWidth="md" className={classes.contactContainer}>
           <List style={{ display: "flex", flexDirection: "row" }}>
