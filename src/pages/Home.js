@@ -4,7 +4,7 @@ import { Container } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -51,7 +51,7 @@ const Main = (props) => {
           color="textPrimary"
           gutterBottom
         >
-          Wallpaper Collection
+          Product Collection
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           Something short and leading about the collection below—its contents,
@@ -61,9 +61,12 @@ const Main = (props) => {
         <div className={classes.heroButtons}>
           <Grid container spacing={1} justifyContent="center">
             <Grid item>
-              <Link href="/products" style={{ textDecorationLine: "none" }}>
+              <Link
+                to="/products"
+                style={{ textDecorationLine: "none", color: "white" }}
+              >
                 <Button variant="contained" color="primary">
-                  Buy our wallpapers!
+                  Buy our products!
                 </Button>
               </Link>
             </Grid>

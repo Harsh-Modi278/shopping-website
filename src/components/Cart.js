@@ -50,7 +50,7 @@ const Cart = (props) => {
   const { cart, setCart } = useContext(CartContext);
 
   const handleIncrease = (e) => {
-    const itemId = e.currentTarget.dataset.id;
+    const itemId = parseInt(e.currentTarget.dataset.id);
     const newCart = cart.map((cartItem) => {
       if (cartItem.id === itemId) {
         cartItem.quantity = parseInt(cartItem.quantity) + 1;
@@ -61,7 +61,7 @@ const Cart = (props) => {
   };
 
   const handleDecrease = (e) => {
-    const itemId = e.currentTarget.dataset.id;
+    const itemId = parseInt(e.currentTarget.dataset.id);
     const newCart = cart.filter((cartItem) => {
       if (cartItem.id === itemId) {
         cartItem.quantity = parseInt(cartItem.quantity) - 1;
@@ -120,32 +120,32 @@ const Cart = (props) => {
                   <Card variant="outlined">
                     <CardMedia
                       className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
+                      image={item.image}
                     />
                     <CardContent className={classes.cardContent}>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                        align="center"
-                      >
-                        {item.title}
+                      <Typography gutterBottom variant="h5" component="h2">
+                        <strong>{item.title}</strong>
                       </Typography>
+                      <br />
                       <Typography
                         gutterBottom
-                        variant="h5"
+                        variant="body1"
                         // component="h3"
                         align="center"
                       >
-                        {`${parseFloat(item.quantity)} x $${parseFloat(
-                          item.price
-                        )} = $${
-                          Math.floor(
-                            parseFloat(item.quantity) *
-                              parseFloat(item.price) *
-                              100
-                          ) / 100
-                        }`}
+                        <strong>
+                          <em>
+                            {`${parseFloat(item.quantity)} x $${parseFloat(
+                              item.price
+                            )} = $${
+                              Math.floor(
+                                parseFloat(item.quantity) *
+                                  parseFloat(item.price) *
+                                  100
+                              ) / 100
+                            }`}
+                          </em>
+                        </strong>
                       </Typography>
                     </CardContent>
                     <CardActions className="parent-even-dist-children">
