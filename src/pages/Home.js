@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Main = (props) => {
+const Home = (props) => {
   const classes = useStyles();
 
   return (
@@ -77,4 +77,4 @@ const Main = (props) => {
   );
 };
 
-export default Main;
+export default Home;

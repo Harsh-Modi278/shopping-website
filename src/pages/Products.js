@@ -4,7 +4,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,6 +11,11 @@ import Container from "@material-ui/core/Container";
 import { useContext } from "react";
 import { CartContext } from "../CartContext";
 import { useEffect } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -47,31 +51,33 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = (props) => {
   const classes = useStyles();
-
-  const [items, setItems] = useState([]);
-
   const { cart, setCart } = useContext(CartContext);
 
+  const [items, setItems] = useState([]);
+  const [snackBar, setSnackBar] = useState(false);
+
+  const closeSnackBar = (e) => {
+    setSnackBar(false);
+  };
+
   const addToCart = async (e) => {
-    const itemId = e.currentTarget.dataset.id;
+    const itemId = parseInt(e.currentTarget.dataset.id);
     let itemQuantity = Math.max(
       0,
       parseInt(document.getElementById(`item-quantity-${itemId}`).value) || 0
     );
 
-    console.log(document.getElementById(`item-quantity-${itemId}`).value, {
-      itemQuantity,
-    });
+    console.log({ itemId, itemQuantity });
 
     if (itemQuantity <= 0) return;
 
-    const itemToAdd = items.filter(
-      (item) => item.id === parseInt(e.currentTarget.dataset.id)
-    );
+    setSnackBar(true);
+
+    const itemToAdd = items.filter((item) => item.id === itemId);
     let isFound = false;
     const newCart = cart.map((cartItem) => {
-      if (cartItem.id === e.currentTarget.dataset.id) {
-        cartItem.quantity = itemQuantity;
+      if (cartItem.id === itemId) {
+        cartItem.quantity += itemQuantity;
         isFound = true;
       }
       return cartItem;
@@ -82,6 +88,7 @@ const Products = (props) => {
     } else {
       await setCart(newCart);
     }
+    // setSnackBar(true);
     return;
   };
 
@@ -105,16 +112,47 @@ const Products = (props) => {
 
   return (
     <React.Fragment>
-      {/* <CssBaseline /> */}
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={snackBar}
+        onClose={closeSnackBar}
+        message="Item added to cart"
+        autoHideDuration={6000}
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={closeSnackBar}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       <main>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* {<pre>{JSON.stringify(cart)}</pre>} */}
           {items.length === 0 ? (
-            <Typography variant="h2" color="textPrimary" align="center">
-              <strong>
-                <em>Fetching Products...</em>
-              </strong>
-            </Typography>
+            <React.Fragment>
+              <div
+                style={{
+                  display: "flex",
+                  flex: "1",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "2rem",
+                }}
+              >
+                <CircularProgress />
+              </div>
+              <Typography variant="h5" color="textPrimary" align="center">
+                <strong>
+                  <em>Fetching Products...</em>
+                </strong>
+              </Typography>
+            </React.Fragment>
           ) : (
             <Grid container spacing={4}>
               {items.map((item) => (
