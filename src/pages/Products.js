@@ -15,7 +15,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -61,18 +60,6 @@ const Products = (props) => {
 
   const closeSnackBar = (e) => {
     setSnackBar({ ...snackBar, open: false });
-  };
-
-  const giveCartItemQuanitityCount = (itemId) => {
-    itemId = parseInt(itemId);
-    console.log(cart);
-    for (let cartItem of cart) {
-      if (cartItem.id === itemId) {
-        return cartItem.quantity;
-      }
-    }
-
-    return 0;
   };
 
   const addToCart = async (e) => {
