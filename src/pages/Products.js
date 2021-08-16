@@ -54,10 +54,25 @@ const Products = (props) => {
   const { cart, setCart } = useContext(CartContext);
 
   const [items, setItems] = useState([]);
-  const [snackBar, setSnackBar] = useState(false);
+  const [snackBar, setSnackBar] = useState({
+    open: false,
+    message: "Item added to your cart",
+  });
 
   const closeSnackBar = (e) => {
-    setSnackBar(false);
+    setSnackBar({ ...snackBar, open: false });
+  };
+
+  const giveCartItemQuanitityCount = (itemId) => {
+    itemId = parseInt(itemId);
+    console.log(cart);
+    for (let cartItem of cart) {
+      if (cartItem.id === itemId) {
+        return cartItem.quantity;
+      }
+    }
+
+    return 0;
   };
 
   const addToCart = async (e) => {
@@ -71,24 +86,28 @@ const Products = (props) => {
 
     if (itemQuantity <= 0) return;
 
-    setSnackBar(true);
-
     const itemToAdd = items.filter((item) => item.id === itemId);
     let isFound = false;
+    let itemName = "item";
     const newCart = cart.map((cartItem) => {
       if (cartItem.id === itemId) {
         cartItem.quantity += itemQuantity;
+        itemName = cartItem.title;
         isFound = true;
       }
       return cartItem;
     });
     if (!isFound) {
       itemToAdd[0].quantity = itemQuantity;
+      itemName = itemToAdd[0].title;
       await setCart([...cart, itemToAdd[0]]);
     } else {
       await setCart(newCart);
     }
-    // setSnackBar(true);
+    setSnackBar({
+      message: `${itemName} x ${itemQuantity} added to your cart`,
+      open: true,
+    });
     return;
   };
 
@@ -114,21 +133,19 @@ const Products = (props) => {
     <React.Fragment>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={snackBar}
+        open={snackBar.open}
         onClose={closeSnackBar}
-        message="Item added to cart"
+        message={snackBar.message}
         autoHideDuration={6000}
         action={
-          <React.Fragment>
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={closeSnackBar}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={closeSnackBar}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
         }
       />
       <main>
